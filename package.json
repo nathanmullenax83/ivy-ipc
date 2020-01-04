@@ -1,0 +1,11 @@
+{
+  "name": "rhizome-types",
+  "version": "1.0.0",
+  "description": "Utility for synthesizing code based on JSON encoded datatypes.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nathan Mullenax",
+  "license": "ISC"
+}
