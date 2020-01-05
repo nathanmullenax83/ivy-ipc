@@ -28,7 +28,7 @@ class Model {
             return 'text(' + l + ')';
         } else if( t==='datetime') {
             return 'datetime';
-        }
+        } 
         throw new Error("No SQL mapping defined for type " + t);
     }
 
@@ -37,12 +37,9 @@ class Model {
         for( let d in this.columns ) {
             let c = this.columns[d];
             cs = cs + '\t' + c.name + ' ' + this.sql_type(c.type,c.max_length);
-            if( d < this.columns.length-1 ) {
-                cs = cs + ',\n';
-            } else {
-                cs = cs + '\n';
-            }
+            cs = cs + ',\n';
         }
+        cs = cs + '\t' + 'id INTEGER UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY';
         return cs;
     }
 
