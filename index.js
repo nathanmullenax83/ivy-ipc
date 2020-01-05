@@ -15,7 +15,7 @@ class Model {
         });
     }
 
-    dbname() {
+    sql_dbname() {
         return this.domain.replace( /[^\w]+/gi, '_');
     }
 
@@ -44,8 +44,12 @@ class Model {
         return cs;
     }
 
+    sql_tablename( path ) {
+        return path.replace(/[^\w]+/gi,'_');
+    }
+
     create() {
-        return 'CREATE TABLE ' + this.dbname() + '.' + this.path + ' (\n' + 
+        return 'CREATE TABLE ' + this.sql_dbname() + '.' + this.sql_tablename(this.path) + ' (\n' + 
             this.sql_columns() + 
         ');';
     }
