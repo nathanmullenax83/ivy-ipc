@@ -26,6 +26,8 @@ class Model {
             return 'bigint';
         } else if( t==='text') {
             return 'text(' + l + ')';
+        } else if( t==='datetime') {
+            return 'datetime';
         }
         throw new Error("No SQL mapping defined for type " + t);
     }
@@ -48,10 +50,21 @@ class Model {
         return path.replace(/[^\w]+/gi,'_');
     }
 
-    create() {
+    
+
+    sql_create() {
         return 'CREATE TABLE ' + this.sql_dbname() + '.' + this.sql_tablename(this.path) + ' (\n' + 
             this.sql_columns() + 
         ');';
+    }
+
+    sql_create_db() {
+        return "IF DB_ID[" + this.sql_dbname() + "] is null\n\t"
+            +     "CREATE DATABASE " + this.sql_dbname() + ";\n\n";
+    }
+
+    sql_drop() {
+        return "DROP TABLE " + this.sql_dbname + '.' + this.sql_tablename(this.path) + ';';
     }
 };
 
@@ -79,5 +92,9 @@ const fetch_type = async function ( domain, path )  {
     await fetch_type( "http://localhost:4000", "putnam-loop/ns/Eatery");
     await fetch_type( "http://localhost:4000", "putnam-loop/ns/Event");
     await fetch_type( "http://localhost:4000", "putnam-loop/ns/Park");
-    console.log(domains['http://localhost:4000']["putnam-loop/ns/User"].create());
+    console.log(domains['http://localhost:4000']["putnam-loop/ns/User"].sql_create_db());
+    console.log(domains['http://localhost:4000']["putnam-loop/ns/User"].sql_create());
+    console.log(domains['http://localhost:4000']["putnam-loop/ns/Eatery"].sql_create());
+    console.log(domains['http://localhost:4000']["putnam-loop/ns/Event"].sql_create());
+    console.log(domains['http://localhost:4000']["putnam-loop/ns/Park"].sql_create());
 })();
